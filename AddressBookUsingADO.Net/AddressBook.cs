@@ -127,6 +127,54 @@ namespace AddressBookUsingADO.Net
                 }
                 return false;
             }
+
+        public bool DisplayByCityOrState(AddressBookModel model)
+        {
+            try
+            {
+                string query = @"Select * from AddressBook where City = 'Austin'";
+                SqlCommand cmd = new SqlCommand(query, Connection);
+                Connection.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        model.FirstName = dr.GetString(1);
+                        model.LastName = dr.GetString(2);
+                        model.Address = dr.GetString(3);
+                        model.City = dr.GetString(4);
+                        model.State = dr.GetString(5);
+                        model.ZipCode = dr.GetString(6);
+                        model.PhoneNumber = dr.GetString(7);
+                        model.EmailId = dr.GetString(8);
+
+                        Console.WriteLine($"{model.FirstName} {model.LastName}, " +
+                            $"{model.Address}, {model.City}, {model.State}" +
+                            $", {model.ZipCode}, {model.PhoneNumber}, {model.EmailId}");
+
+                        Console.WriteLine("\n");
+
+                        dr.Close();
+                    }
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("No data found");
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+            return false;
         }
+    }
 }
 
