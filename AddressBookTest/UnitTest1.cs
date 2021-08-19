@@ -56,6 +56,12 @@ namespace AddressBookTest
             var result = addressBook.DeleteContact(model);
             Assert.IsTrue(result);
         }
+        [TestMethod]
+        public void GivenCityOrStateShouldReturnDataIfFound()
+        {
+            var result = addressBook.DisplayByCityOrState(model);
+            Assert.IsNotNull(result);
+        }
     }
 }
    
